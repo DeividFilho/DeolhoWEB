@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>De Olho no Lixo — Fiscalização Ambiental Cidadã</title>
+  
+  <!-- ========== SEGURANÇA: AÇÕES 1 e 2 ========== -->
+  <!-- Content Security Policy (CSP) restritiva -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' 'unsafe-eval';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' data:;
+    object-src 'none';
+    base-uri 'self';
+    frame-ancestors 'none';
+    upgrade-insecure-requests;
+  ">
+  <!-- X-Frame-Options: proteção contra clickjacking -->
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <!-- X-Content-Type-Options: evita MIME type sniffing -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <!-- ============================================= -->
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* (mesmo CSS, inalterado) */
+    :root {
+      --bg:        #080d0a;
+      --bg2:       #0d1410;
+      --surface:   #111a13;
+      --surface2:  #182019;
+      --green:     #3ddc6e;
+      --green-dim: #1f7a3a;
+      --green-glow:#3ddc6e44;
+      --amber:     #f5a623;
+      --red:       #ff4757;
+      --text:      #e8f0ea;
+      --muted:     #6b8070;
+      --border:    #1e2e22;
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-mono:    'DM Mono', monospace;
+      --font-body:    'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--green-dim); border-radius: 2px; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid transparent;
+      transition: background 0.4s, border-color 0.4s;
+    }
+
+    nav.scrolled {
+      background: rgba(8, 13, 10, 0.92);
+      border-color: var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 8px var(--green); transform: scale(1); }
+      50% { box-shadow: 0 0 16px var(--green), 0 0 32px var(--green-glow); transform: scale(1.2); }
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--green); }
+
+    .nav-cta {
+      font-size: 0.85rem !important;
+      font-weight: 600 !important;
+      color: var(--green) !important;
+      border: 1px solid var(--green-dim);
+      padding: 0.5rem 1.25rem;
+      border-radius: 40px;
+      transition: background 0.2s, box-shadow 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--green-glow) !important;
+      box-shadow: 0 0 20px var(--green-glow) !important;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+      opacity: 0.6;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(ellipse, var(--green-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--green);
+      text-transform: uppercase;
+      background: rgba(61, 220, 110, 0.08);
+      border: 1px solid rgba(61, 220, 110, 0.2);
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      margin-bottom: 2.5rem;
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse-dot 2s infinite;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--green);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      max-width: 580px;
+      margin: 2rem auto 0;
+      font-weight: 300;
+      line-height: 1.75;
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--green);
+      color: #050d07;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 30px var(--green-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(61,220,110,0.4), 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--muted);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      background: var(--bg2);
+    }
+
+    .ticker {
+      display: flex;
+      gap: 4rem;
+      animation: ticker 28s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ticker-item {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      flex-shrink: 0;
+    }
+
+    .ticker-item span {
+      color: var(--green);
+      margin-right: 0.5rem;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    section { padding: 7rem 2rem; }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-body {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.8;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    .problem { background: var(--bg); }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      margin-top: 4rem;
+    }
+
+    .stat-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .stat-card:hover { border-color: var(--green-dim); }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .stat-unit {
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin-left: 2px;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      line-height: 1.4;
+    }
+
+    .stat-icon {
+      font-size: 1.6rem;
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+    }
+
+    .problem-text p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+
+    .problem-text strong { color: var(--text); font-weight: 600; }
+
+    .quote-block {
+      border-left: 3px solid var(--green);
+      padding-left: 1.25rem;
+      margin: 2rem 0;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .how { background: var(--bg2); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(12.5% + 28px);
+      right: calc(12.5% + 28px);
+      height: 1px;
+      background: linear-gradient(90deg, var(--green-dim), var(--border), var(--green-dim));
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 2rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .step:hover {
+      border-color: var(--green-dim);
+      transform: translateY(-4px);
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--green-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--green);
+      box-shadow: 0 0 16px var(--green-glow);
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .step p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .features { background: var(--bg); }
+
+    .features-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      margin-top: 4rem;
+    }
+
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      border-radius: 16px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background 0.25s, border-color 0.25s;
+    }
+
+    .feature-item.active,
+    .feature-item:hover {
+      background: var(--surface);
+      border-color: var(--border);
+    }
+
+    .feature-item.active { border-color: var(--green-dim); }
+
+    .feature-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green-dim);
+      margin-top: 6px;
+      flex-shrink: 0;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-item.active .feature-dot,
+    .feature-item:hover .feature-dot {
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+    }
+
+    .feature-content h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .feature-content p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .terminal {
+      background: #060e08;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.25rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-dot.r { background: #ff5f57; }
+    .t-dot.y { background: #febc2e; }
+    .t-dot.g { background: #28c840; }
+
+    .terminal-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-left: 0.5rem;
+    }
+
+    .terminal-body {
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 2;
+    }
+
+    .t-line { display: block; }
+    .t-label { color: var(--green); }
+    .t-val { color: #a8d8b8; }
+    .t-muted { color: var(--muted); }
+    .t-warn { color: var(--amber); }
+    .t-alert { color: var(--red); }
+    .t-comment { color: #3a5440; }
+
+    .t-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 1em;
+      background: var(--green);
+      vertical-align: middle;
+      animation: blink 1.1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .intelligence { background: var(--bg2); }
+
+    .intel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 4rem;
+      align-items: center;
+    }
+
+    .intel-visual {
+      position: relative;
+    }
+
+    .heatmap-demo {
+      background: #060e08;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      overflow: hidden;
+    }
+
+    .heatmap-title {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .heatmap-title::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--amber);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--amber);
+      animation: pulse-dot 1.5s infinite;
+    }
+
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 3px;
+    }
+
+    .hm-cell {
+      aspect-ratio: 1;
+      border-radius: 3px;
+      animation: hm-appear 0.5s ease both;
+    }
+
+    @keyframes hm-appear {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .intel-insights {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .insight-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: border-color 0.3s;
+    }
+
+    .insight-card:hover { border-color: var(--green-dim); }
+
+    .insight-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .insight-card h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .insight-card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+    }
+
+    .tag-amber { background: rgba(245,166,35,0.12); color: var(--amber); border: 1px solid rgba(245,166,35,0.25); }
+    .tag-green { background: rgba(61,220,110,0.08); color: var(--green); border: 1px solid rgba(61,220,110,0.2); }
+    .tag-red   { background: rgba(255,71,87,0.1); color: var(--red); border: 1px solid rgba(255,71,87,0.2); }
+
+    .metrics { background: var(--bg); }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .metric-card:hover {
+      border-color: var(--green-dim);
+      transform: translateY(-4px);
+    }
+
+    .metric-num {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.6rem;
+      line-height: 1.4;
+    }
+
+    .cta-section {
+      background: var(--bg);
+      padding: 5rem 2rem 8rem;
+    }
+
+    .cta-box {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      padding: 4rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(ellipse, var(--green-glow), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-box h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .cta-box p {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 440px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .cta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .cta-note {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-sub {
+      font-size: 0.8rem;
+      color: #3a4d40;
+      font-family: var(--font-mono);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .problem-grid,
+      .features-layout,
+      .intel-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .steps::before { display: none; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 540px) {
+      section { padding: 5rem 1.25rem; }
+      .steps { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+      .cta-box { padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-dot"></div>
+    De Olho no Lixo
+  </a>
+  <ul class="nav-links">
+    <li><a href="#como-funciona">Como funciona</a></li>
+    <li><a href="#funcionalidades">Funcionalidades</a></li>
+    <li><a href="#inteligencia">Inteligência</a></li>
+    <li><a href="#baixar" class="nav-cta">Baixar APK</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Fiscalização Ambiental Cidadã</div>
+  <h1 class="hero-title">
+    De Olho<br><em>no Lixo</em>
+  </h1>
+  <p class="hero-subtitle">
+    Transforme o cidadão em agente ativo de fiscalização ambiental. Denúncias em tempo real, mapas de calor e rotas inteligentes — conectados diretamente a quem pode agir.
+  </p>
+  <div class="hero-actions">
+    <a href="#baixar" class="btn-primary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h4.34v6h4.66V9h4.34L12 2z"/></svg>
+      Baixar APK
+    </a>
+    <a href="#como-funciona" class="btn-ghost">
+      Ver como funciona
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+    </a>
+  </div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker" id="ticker">
+    <div class="ticker-item"><span>▲</span> 76 MILHÕES DE TONELADAS DE RESÍDUOS/ANO NO BRASIL</div>
+    <div class="ticker-item"><span>●</span> 3.000+ LIXÕES ATIVOS NO PAÍS</div>
+    <div class="ticker-item"><span>▲</span> APENAS 4% DOS RESÍDUOS SÃO RECICLADOS</div>
+    <div class="ticker-item"><span>●</span> COLETA IRREGULAR CUSTA BILHÕES AOS MUNICÍPIOS</div>
+    <div class="ticker-item"><span>▲</span> DADOS EM TEMPO REAL MUDAM ISSO</div>
+    <div class="ticker-item"><span>●</span> 76 MILHÕES DE TONELADAS DE RESÍDUOS/ANO NO BRASIL</div>
+    <div class="ticker-item"><span>▲</span> 3.000+ LIXÕES ATIVOS NO PAÍS</div>
+    <div class="ticker-item"><span>●</span> APENAS 4% DOS RESÍDUOS SÃO RECICLADOS</div>
+    <div class="ticker-item"><span>▲</span> COLETA IRREGULAR CUSTA BILHÕES AOS MUNICÍPIOS</div>
+    <div class="ticker-item"><span>●</span> DADOS EM TEMPO REAL MUDAM ISSO</div>
+  </div>
+</div>
+
+<section class="problem" id="problema">
+  <div class="section-inner">
+    <div class="problem-grid">
+      <div>
+        <p class="section-label reveal">// O problema</p>
+        <h2 class="section-title reveal reveal-delay-1">O descarte<br>irregular é<br><em style="font-style:italic;color:var(--amber)">invisível.</em></h2>
+        <div class="problem-text reveal reveal-delay-2">
+          <p>
+            Toneladas de resíduos são descartados irregularmente todos os dias em terrenos, rios, mangues e esquinas — e a prefeitura só fica sabendo quando o problema já é grande demais.
+          </p>
+          <blockquote class="quote-block">
+            "O cidadão que passa todo dia por aquele ponto sabe. A câmera de satélite não."
+          </blockquote>
+          <p>
+            <strong>De Olho no Lixo</strong> conecta quem vê ao problema, a quem pode resolver — com dados, velocidade e inteligência.
+          </p>
+        </div>
+      </div>
+
+      <div class="stat-stack">
+        <div class="stat-card reveal reveal-delay-1"><div class="stat-icon">🗑️</div><div><div class="stat-num">76<span class="stat-unit">mi</span></div><div class="stat-label">toneladas de resíduos gerados por ano no Brasil</div></div></div>
+        <div class="stat-card reveal reveal-delay-2"><div class="stat-icon">⚠️</div><div><div class="stat-num">3<span class="stat-unit">mil+</span></div><div class="stat-label">lixões ativos ainda operando no território nacional</div></div></div>
+        <div class="stat-card reveal reveal-delay-3"><div class="stat-icon">♻️</div><div><div class="stat-num" style="color:var(--red)">4<span class="stat-unit">%</span></div><div class="stat-label">apenas dos resíduos são efetivamente reciclados</div></div></div>
+        <div class="stat-card reveal reveal-delay-4"><div class="stat-icon">⏱️</div><div><div class="stat-num" style="color:var(--amber)">72<span class="stat-unit">h+</span></div><div class="stat-label">tempo médio de resposta às denúncias nos municípios</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="como-funciona">
+  <div class="section-inner">
+    <div class="reveal"><p class="section-label">// Como funciona</p></div>
+    <h2 class="section-title reveal reveal-delay-1">Do registro à<br>solução, em minutos.</h2>
+    <div class="steps">
+      <div class="step reveal reveal-delay-1"><div class="step-num">01</div><h3>Cidadão flagra o descarte</h3><p>Pelo app, fotografa e marca o local exato. Classifica o tipo e porte do resíduo em segundos.</p></div>
+      <div class="step reveal reveal-delay-2"><div class="step-num">02</div><h3>Sistema processa em tempo real</h3><p>Os dados são indexados no mapa com geolocalização precisa. Ponto crítico identificado imediatamente.</p></div>
+      <div class="step reveal reveal-delay-3"><div class="step-num">03</div><h3>Rota otimizada é gerada</h3><p>Equipes de coleta recebem rotas inteligentes priorizando pontos críticos por porte e densidade.</p></div>
+      <div class="step reveal reveal-delay-4"><div class="step-num">04</div><h3>Resíduo vai ao destino certo</h3><p>Reciclagem, compostagem ou descarte controlado. Nunca lixão ou rio. Coleta confirmada no app.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="funcionalidades">
+  <div class="section-inner">
+    <div class="features-layout">
+      <div><p class="section-label reveal">// Funcionalidades</p><h2 class="section-title reveal reveal-delay-1">Uma plataforma.<br>Cinco poderes.</h2>
+        <div class="feature-list" style="margin-top:2.5rem">
+          <div class="feature-item active reveal reveal-delay-1"><div class="feature-dot"></div><div class="feature-content"><h3>Denúncia geolocalizada</h3><p>Foto + localização + classificação do resíduo em menos de 30 segundos. Sem burocracia.</p></div></div>
+          <div class="feature-item reveal reveal-delay-2"><div class="feature-dot"></div><div class="feature-content"><h3>Mapa de calor por densidade</h3><p>Visualização em tempo real das áreas críticas, ponderada por porte e frequência de descartes.</p></div></div>
+          <div class="feature-item reveal reveal-delay-3"><div class="feature-dot"></div><div class="feature-content"><h3>Rota inteligente de coleta</h3><p>Algoritmo que otimiza percursos para as equipes, reduzindo tempo e custo operacional.</p></div></div>
+          <div class="feature-item reveal reveal-delay-4"><div class="feature-dot"></div><div class="feature-content"><h3>Confirmação de coleta</h3><p>Agentes confirmam a coleta no app. Ciclo fechado: registro → coleta → destino correto.</p></div></div>
+          <div class="feature-item reveal reveal-delay-5"><div class="feature-dot"></div><div class="feature-content"><h3>Conteúdo educativo integrado</h3><p>Materiais que mudam a percepção do "lixo". Da denúncia à consciência ambiental.</p></div></div>
+        </div>
+      </div>
+      <div class="terminal reveal reveal-delay-2"><div class="terminal-bar"><div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div><span class="terminal-title">sistema · tempo-real</span></div><div class="terminal-body"><span class="t-line"><span class="t-muted">$ </span><span class="t-label">nova_denuncia</span> <span class="t-val">--id=4821</span></span><span class="t-line"> </span><span class="t-line"><span class="t-comment">// registro recebido</span></span><span class="t-line"><span class="t-label">tipo</span>     <span class="t-val">→ Plástico / Médio porte</span></span><span class="t-line"><span class="t-label">local</span>    <span class="t-val">→ -3.1190, -60.0217</span></span><span class="t-line"><span class="t-label">status</span>   <span class="t-val">→ PENDENTE</span></span><span class="t-line"> </span><span class="t-line"><span class="t-comment">// análise de densidade</span></span><span class="t-line"><span class="t-warn">⚠ ponto crítico detectado</span></span><span class="t-line"><span class="t-label">ocorrências</span> <span class="t-val">→ 12 nos últimos 7d</span></span><span class="t-line"> </span><span class="t-line"><span class="t-comment">// rota atualizada</span></span><span class="t-line"><span class="t-label">prioridade</span>  <span class="t-val">→ ALTA</span></span><span class="t-line"><span class="t-label">equipe_02</span>  <span class="t-val">→ rota gerada ✓</span></span><span class="t-line"> </span><span class="t-line"><span class="t-label">$</span> <span class="t-cursor"></span></span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="intelligence" id="inteligencia">
+  <div class="section-inner">
+    <div class="intel-grid">
+      <div><p class="section-label reveal">// Inteligência preditiva</p><h2 class="section-title reveal reveal-delay-1">Não apaga<br>incêndios.<br><em style="font-style:italic;color:var(--green)">Previne.</em></h2><p class="section-body reveal reveal-delay-2" style="margin-top:1.25rem;margin-bottom:2rem">O sistema aprende com os padrões. Se um ponto é limpo toda segunda e fica sujo toda terça, ele não espera — ele recomenda a solução estrutural antes que o ciclo se repita.</p>
+        <div class="intel-insights"><div class="insight-card reveal reveal-delay-2"><div class="insight-icon">📍</div><div><h4>Padrão identificado</h4><p>Ponto X: limpo nas segundas, crítico nas terças há 8 semanas consecutivas.</p><span class="tag tag-amber">Recorrente</span></div></div><div class="insight-card reveal reveal-delay-3"><div class="insight-icon">🎯</div><div><h4>Recomendação ao município</h4><p>Instalar caçamba fixa ou câmera de vigilância neste ponto reduz custo de coleta em ~60%.</p><span class="tag tag-green">Ação preventiva</span></div></div><div class="insight-card reveal reveal-delay-4"><div class="insight-icon">📊</div><div><h4>Tomada de decisão com dados</h4><p>Gestores municipais visualizam mapas de calor históricos e projeções de longo prazo.</p><span class="tag tag-red">Alta prioridade</span></div></div></div>
+      </div>
+      <div class="intel-visual reveal reveal-delay-3"><div class="heatmap-demo"><div class="heatmap-title">MAPA DE CALOR · AO VIVO</div><div class="heatmap-grid" id="heatmap-grid"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="metrics" id="impacto">
+  <div class="section-inner"><div style="text-align:center; margin-bottom:1rem"><p class="section-label reveal">// Impacto projetado</p><h2 class="section-title reveal reveal-delay-1">Números que<br>fazem sentido.</h2></div>
+    <div class="metrics-grid"><div class="metric-card reveal reveal-delay-1"><span class="metric-num counter" data-target="87">0</span><span style="font-size:1.5rem;color:var(--green)">%</span><div class="metric-label">Redução no tempo médio<br>de resposta às denúncias</div></div><div class="metric-card reveal reveal-delay-2"><span class="metric-num counter" data-target="3">0</span><span style="font-size:1.5rem;color:var(--green)">×</span><div class="metric-label">Mais eficiência nas<br>rotas de coleta</div></div><div class="metric-card reveal reveal-delay-3"><span class="metric-num counter" data-target="60">0</span><span style="font-size:1.5rem;color:var(--green)">%</span><div class="metric-label">Redução de lixões<br>informais em pilotos</div></div><div class="metric-card reveal reveal-delay-4"><span class="metric-num counter" data-target="100">0</span><span style="font-size:1.5rem;color:var(--green)">%</span><div class="metric-label">Rastreabilidade dos<br>resíduos coletados</div></div></div>
+  </div>
+</section>
+
+<section class="cta-section" id="baixar">
+  <div class="cta-box reveal">
+    <h2>Comece a<br><em style="font-style:italic;color:var(--green)">fiscalizar hoje.</em></h2>
+    <p>Disponível para Android. Código aberto, sem anúncios, construído para o bem comum.</p>
+    <div class="cta-group">
+      <a href="#" class="btn-primary" id="downloadLink">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 12H16V8h-3.5v4H11l3.25 4L17.5 12zM5 20h14v2H5v-2zM3 4h18v2H3V4z"/><path d="M5 20h14v-2H5v2zm7-18L5.33 9h4.34v6h4.66V9h4.34L12 2z"/></svg>
+        Baixar APK — EcoRotas
+      </a>
+      <span class="cta-note">versão em desenvolvimento · contribuições abertas</span>
+    </div>
+  </div>
+</section>
+
+<footer><div class="footer-logo">De Olho no Lixo</div><div class="footer-sub">© 2025 · Tecnologia para sustentabilidade urbana · Código aberto</div></footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 50); });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Contadores com textContent (ação 3)
+  const counters = document.querySelectorAll('.counter');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = +el.dataset.target;
+        let current = 0;
+        const duration = 1400;
+        const step = target / (duration / 16);
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = Math.floor(current);
+          if (current >= target) clearInterval(timer);
+        }, 16);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(el => counterObserver.observe(el));
+
+  function buildHeatmap() {
+    const grid = document.getElementById('heatmap-grid');
+    if (!grid || grid.children.length > 0) return;
+    const hotspots = [[1,1],[1,2],[2,1],[2,2],[2,3],[5,6],[5,7],[6,6],[6,7],[6,5],[3,8],[3,9],[4,8],[4,9],[8,2],[8,3],[9,2],[9,1],[7,8],[8,8],[7,7]];
+    const heatValues = Array.from({length:10}, ()=>Array(10).fill(0));
+    hotspots.forEach(([r,c])=>{
+      for(let dr=-2;dr<=2;dr++) for(let dc=-2;dc<=2;dc++){
+        const nr=r+dr, nc=c+dc;
+        if(nr>=0&&nr<10&&nc>=0&&nc<10){
+          const dist = Math.sqrt(dr*dr+dc*dc);
+          heatValues[nr][nc] += Math.max(0, 1 - dist/2.5);
+        }
+      }
+    });
+    const max = Math.max(...heatValues.flat());
+    for(let r=0;r<10;r++){
+      for(let c=0;c<10;c++){
+        const cell = document.createElement('div');
+        cell.className = 'hm-cell';
+        const v = heatValues[r][c]/max;
+        let color;
+        if(v < 0.001) color = 'rgba(30,50,35,0.3)';
+        else if(v < 0.35) { const t=v/0.35; const g=Math.round(40+t*100); color = `rgba(0,${g},30,${0.3+t*0.4})`; }
+        else if(v < 0.7) { const t=(v-0.35)/0.35; color = `rgba(${Math.round(180*t)},${Math.round(180-100*t)},0,${0.55+t*0.25})`; }
+        else { const t=(v-0.7)/0.3; color = `rgba(${Math.round(220+35*t)},${Math.round(60-60*t)},0,${0.75+t*0.25})`; }
+        cell.style.background = color;
+        cell.style.animationDelay = `${(r*10+c)*12}ms`;
+        grid.appendChild(cell);
+      }
+    }
+  }
+  const heatSection = document.querySelector('.heatmap-demo');
+  if(heatSection){
+    const heatObs = new IntersectionObserver((entries)=>{ if(entries[0].isIntersecting){ buildHeatmap(); heatObs.disconnect(); } }, {threshold:0.3});
+    heatObs.observe(heatSection);
+  }
+
+  document.querySelectorAll('.feature-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.feature-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+
+  // Download APK com verificação
+  const downloadUrl = "downloads/deolho.apk";
+  const downloadBtn = document.getElementById('downloadLink');
+
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', async function(e) {
+      e.preventDefault();
+
+      const originalText = downloadBtn.innerHTML;
+      downloadBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="animation: spin 1s linear infinite;"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Verificando...';
+      downloadBtn.style.opacity = '0.7';
+      downloadBtn.style.pointerEvents = 'none';
+
+      try {
+        const response = await fetch(downloadUrl, { method: 'HEAD', cache: 'no-cache' });
+        if (response.ok) {
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.download = "deolho_no_lixo.apk";
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } else {
+          alert("📱 O arquivo APK ainda não está disponível neste servidor.\n\nEntre em contato com a equipe do projeto para obter o instalador.\n(Este é um ambiente de demonstração.)");
+        }
+      } catch (err) {
+        console.error("Erro ao verificar APK:", err);
+        alert("Não foi possível verificar a disponibilidade do APK. Verifique sua conexão ou entre em contato com a equipe.");
+      } finally {
+        downloadBtn.innerHTML = originalText;
+        downloadBtn.style.opacity = '';
+        downloadBtn.style.pointerEvents = '';
+      }
+    });
+  }
+
+  const styleSpin = document.createElement('style');
+  styleSpin.textContent = `@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`;
+  document.head.appendChild(styleSpin);
+</script>
+</body>
+</html>
